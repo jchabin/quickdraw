@@ -1,4 +1,4 @@
-var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza"];
+var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", ""];
 
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
