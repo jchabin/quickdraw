@@ -19,7 +19,7 @@ function getColor(col){
 	return "hsl(" + col.h + ", " + col.s + "%, " + col.l + "%)";
 }
 function getInverseColor(col){
-	return "hsl(" + (360 - col.h) + ", " + (col.s < 50 ? 1 - col.s : col.s) + "%, " + (100 - col.l) + "%)";
+	return "hsl(" + (180 + col.h) + ", " + (col.s < 50 ? 1 - col.s : col.s) + "%, " + (100 - col.l) + "%)";
 }
 function newColor(){
 	color = {
