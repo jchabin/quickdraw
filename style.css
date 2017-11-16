@@ -1,0 +1,179 @@
+*{
+	margin: 0;
+}
+.font{
+	font-family: "Amatic SC";
+}
+html, body{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	text-align: center;
+}
+#title{
+	font-size: 20vmin;
+	text-align: center;
+	animation: wobble 3s infinite;
+	margin-bottom: 20vmin;
+}
+@keyframes wobble{
+	0%{transform: rotate(-5deg);}
+	50%{transform: rotate(5deg);}
+	100%{transform: rotate(-5deg);}
+}
+#background{
+	position: absolute;
+	top: calc(50vh - 50vmax);
+	left: calc(50vw - 50vmax);
+	height: 100vmax;
+	width: 100vmax;
+}
+.button{
+	font-size: 10vmin;
+	padding: 2vmin;
+	border: 2px solid black;
+	width: 40vmax;
+	margin: 5vmin;
+	margin-left: -3vmin;
+	cursor: pointer;
+	transition: transform .2s;
+	border-radius: 3vmin;
+}
+.button:hover{
+	transform: translateX(-10vmin) rotate(-2deg);
+}
+.notturn{
+	transform: none !important;
+}
+#color{
+	width: 30vmin;
+	height: 30vmin;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
+	font-size: 7vmin;
+	border-left : 2px solid black;
+	border-top : 2px solid black;
+	transition: color .5s, background .5s;
+}
+#code{
+	height: 20vmin;
+	font-size: 15vmin;
+	text-shadow: 0 0 2vmin black;
+}
+#players{
+	height: calc(100vh - 20vmin);
+	width: 100vw;
+	border-top: 2px solid black;
+	box-sizing: border-box;
+	font-size: 10vmin;
+	color: #888;
+	line-height: 80vh;
+}
+#input{
+	height: 100%;
+	width: calc(40vmax - 10vmin);
+	font-size: 10vmin;
+	text-align: center;
+	outline: none;
+	border: none;
+	text-transform: uppercase;
+}
+.playericon{
+	height: 20vmin;
+	width: 20vmin;
+	border-radius: 100%;
+	border: 2px solid black;
+	cursor: pointer;
+	position: absolute;
+	transform: translate(-10vmin, -10vmin);
+	transition: transform .5s;
+}
+.playericon:hover{
+	transform: translate(-10vmin, -10vmin) scale(0.9);
+}
+#waiting{
+	height: 100vh;
+	width: 100%;
+	text-align: center;
+	line-height: 100vh;
+}
+.wait{
+/* 	background-color: white; */
+	font-size: 10vmin;
+	text-shadow: 0 0 3px white;
+}
+#start{
+	position: absolute;
+	top: -5vmin;
+	right: -5vmin;
+	font-size: 10vmin;
+	border-radius: 3vmin;
+	border: 2px solid black;
+	padding: 2vmin;
+	cursor: pointer;
+	padding-right: 10vmin;
+	padding-top: 5vmin;
+	transition: right .2s;
+}
+#start:hover{
+	right: -10vmin;
+}
+#loader{
+	font-size: 10vmin;
+	background-color: black;
+	color: white;
+	height: 100vh;
+	width: 100%;
+	text-align: center;
+	line-height: 100vh;
+}
+#prompt{
+	height: 30vmin;
+	width: 100%;
+	color: white;
+	font-size: 7vmin;
+	background-color: black;
+}
+.topic{
+	font-size: 15vmin;
+}
+#svg{
+	height: calc(100vh - 30vmin);
+	width: 100%;
+}
+#counter{
+	position: absolute;
+	top: -5vmin;
+	right: -5vmin;
+	font-size: 10vmin;
+	padding: 2vmin;
+	border-radius: 3vmin;
+	border: 2px solid white;
+	top: -5vmin;
+	right: -5vmin;
+	padding-right: 5vmin;
+	padding-top: 5vmin;
+	color: white;
+}
+.error{
+	color: red;
+}
+#rating{
+	
+}
+.star{
+	display: inline-block;
+	height: 5vmin;
+	width: 5vmin;
+	margin: 2vmin;
+	border-radius: 100%;
+	background-color: #888;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: transform .2s;
+}
+.star:hover{
+	transform: scale(1.3);
+}
