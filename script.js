@@ -1,4 +1,4 @@
-var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur"];
+var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard"];
 
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
@@ -31,7 +31,7 @@ function newColor(){
 	c.style.color = getInverseColor(color);
 }
 newColor();
-var code, ref, topic = "<div class='error'>Error</div>", players = {}, playercode, scoresLeft;
+var code, ref, topic = "<div class='error'>Error</div>", players = {}, playercode, scoresLeft, ratedPlayers = [];
 function score(n){
 	var pcode = playercode.ge.path.n[1];
 	database.ref("/A" + code + "/" + pcode).once("value", function(v){
@@ -79,10 +79,11 @@ function rateDrawing(){
 		}
 	document.getElementById("p").setAttribute("transform", "");
 	document.getElementById("svg").style.transform = "unset";
-	if(playercode == undefined || playercode.ge.path.n[1] == ref.path.n[1])
+	if(playercode == undefined || playercode.ge.path.n[1] == ref.path.n[1] || ratedPlayers.includes(playercode.ge.path.n[1]))
 		requestAnimationFrame(rateDrawing);
 	else{
 		//console.log(playercode);
+		ratedPlayers.push(playercode.ge.path.n[1]);
 		document.getElementById("p").setAttribute("d", playercode.val().d);
 		document.getElementById("p").setAttribute("stroke", getColor(playercode.val().color));
 		requestAnimationFrame(positionDrawing);
@@ -136,6 +137,8 @@ function newGame(){
 			database.ref("/A" + code + "/status").on("value", function(e){
 				e = e.val();
 				if(e == 1){
+					mouse = false;
+					ratedPlayers = [];
 					d = "M" + document.body.clientWidth / 2 + "," + document.body.clientHeight / 2 + " ";
 					document.getElementById("container").innerHTML = "<div id='loader' class='font'>Get ready to draw in... <span id='count'>5</span></div>";
 					window.setTimeout(function(){
@@ -224,7 +227,7 @@ function checkCode(el){
 		el.onkeyup = null;
 		database.ref("/A" + code + "/status").once("value", function(e){
 			if(e.val() === 0){
-				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Wating for the game to start...</span></div>";
+				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Wating for the game to start...</span></div><div id='wcode' class='wait font'>" + code + "</div>";
 				ref = database.ref("/A" + code).push();
 				ref.set({
 					color: color,
@@ -236,6 +239,8 @@ function checkCode(el){
 				database.ref("/A" + code + "/status").on("value", function(e){
 					e = e.val();
 					if(e == 1){
+						mouse = false;
+						ratedPlayers = [];
 						d = "M" + document.body.clientWidth / 2 + "," + document.body.clientHeight / 2 + " ";
 						document.getElementById("container").innerHTML = "<div id='loader' class='font'>Get ready to draw in... <span id='count'>5</span></div>";
 						window.setTimeout(function(){
