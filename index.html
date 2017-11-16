@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, width=device-width" user-scalable="no">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+		<title>QuickDraw</title>
+	</head>
+	
+	<body>
+		<div id="container">
+			<div id="title" class="font">QuickDraw!</div>
+			<div class="button font" onclick="newGame(); this.onclick = null;">Host a Game</div>
+			<div class="button font" onclick="joinGame(this)">Join a Game</div>
+			<div id="color" class="font" onclick="newColor()">Click to change your color</div>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
