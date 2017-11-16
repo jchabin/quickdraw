@@ -325,14 +325,14 @@ var mouse = false;
 
 function startLine(event, e){
 	// console.log(event);
-	e.children[0].setAttribute("d", d + "M" + event.clientX + "," + (event.clientY - Math.min(document.body.clientHeight, document.body.clientWidth) * 0.3) + " ");
+	e.children[0].setAttribute("d", d + "M" + event.pageX + "," + (event.pageY - Math.min(document.body.clientHeight, document.body.clientWidth) * 0.3) + " ");
 	d = e.children[0].getAttribute("d");
 	mouse = true;
 }
 function moveLine(event, e){
 	// console.log(event);
 	if(mouse){
-		e.children[0].setAttribute("d", d + "L" + event.clientX + "," + (event.clientY - Math.min(document.body.clientHeight, document.body.clientWidth) * 0.3) + " ");
+		e.children[0].setAttribute("d", d + "L" + event.pageX + "," + (event.pageY - Math.min(document.body.clientHeight, document.body.clientWidth) * 0.3) + " ");
 		d = e.children[0].getAttribute("d");
 	}
 }
