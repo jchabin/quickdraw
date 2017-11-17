@@ -1,4 +1,4 @@
-var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard"];
+var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard", "computer", "mouse", "fire", "teeth", "rocket", "train", "bottle", "guitar", "sock", "pumpkin", "pear", "banana", "boat", "pants", "watch", "lamp", "hat"];
 
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
@@ -238,7 +238,7 @@ function checkCode(el){
 		el.onkeyup = null;
 		database.ref("/A" + code + "/status").once("value", function(e){
 			if(e.val() === 0){
-				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Wating for the game to start...</span></div><div id='wcode' class='wait font'>" + code + "</div>";
+				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Waiting for the game to start...</span></div><div id='wcode' class='wait font'>" + code + "</div>";
 				ref = database.ref("/A" + code).push();
 				ref.set({
 					color: color,
