@@ -311,7 +311,7 @@ function checkCode(el){
 						document.getElementById("p").setAttribute("stroke", getColor(max.val().color));
 						p.setAttribute("transform", "");
 						document.getElementById("svg").style.transform = "unset";
-						document.getElementById("prompt").innerHTML = "Best in show:";
+						document.getElementById("prompt").innerHTML = "<div class='topic'>Best in show:</div>";
 						// if(!mobile)
 						requestAnimationFrame(positionDrawing);
 						setTimeout(function(){
