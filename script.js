@@ -64,6 +64,17 @@ function score(n){
 			setTimeout(function(){
 				database.ref("/A" + code + "/status").set(2);
 			}, 500);
+		else
+			setTimeout(function(){
+				var done = true;
+				for(var v in players)
+					if(players[v].val().done != true)
+						done = false;
+				if(done)
+					setTimeout(function(){
+						database.ref("/A" + code + "/status").set(2);
+					}, 1000);
+			},500)
 	}
 	scoresLeft--;
 }
