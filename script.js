@@ -1,5 +1,5 @@
 var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard", "computer", "mouse", "fire", "teeth", "rocket", "train", "bottle", "guitar", "sock", "pumpkin", "pear", "banana", "boat", "pants", "watch", "lamp", "hat"];
-
+var timeouts = [];
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
 var config = {
@@ -61,20 +61,20 @@ function score(n){
 			if(players[v].val().done != true)
 				done = false;
 		if(done)
-			setTimeout(function(){
+			timeouts.push(setTimeout(function(){
 				database.ref("/A" + code + "/status").set(2);
-			}, 500);
+			}, 500));
 		else
-			setTimeout(function(){
+			timeouts.push(setTimeout(function(){
 				var done = true;
 				for(var v in players)
 					if(players[v].val().done != true)
 						done = false;
 				if(done)
-					setTimeout(function(){
+					timeouts.push(setTimeout(function(){
 						database.ref("/A" + code + "/status").set(2);
-					}, 1000);
-			},500)
+					}, 1000));
+			},500));
 	}
 	scoresLeft--;
 }
@@ -152,26 +152,26 @@ function newGame(){
 					ratedPlayers = [];
 					d = "M" + document.body.clientWidth / 2 + "," + document.body.clientHeight / 2 + " ";
 					document.getElementById("container").innerHTML = "<div id='loader' class='font'>Get ready to draw in... <span id='count'>5</span></div>";
-					window.setTimeout(function(){
+					timeouts.push(window.setTimeout(function(){
 						document.getElementById("count").innerHTML = "4";
-					}, 1000);
-					window.setTimeout(function(){
+					}, 1000));
+					timeouts.push(window.setTimeout(function(){
 						document.getElementById("count").innerHTML = "3";
-					}, 2000);
-					window.setTimeout(function(){
+					}, 2000));
+					timeouts.push(window.setTimeout(function(){
 						document.getElementById("count").innerHTML = "2";
-					}, 3000);
-					window.setTimeout(function(){
+					}, 3000));
+					timeouts.push(window.setTimeout(function(){
 						document.getElementById("count").innerHTML = "1";
-					}, 4000);
-					window.setTimeout(function(){
-						document.getElementById("container").innerHTML = "<div id='prompt' class='font'>Draw a...<div class='topic'>" + topic + "</div></div><svg id='svg' onmousedown='var event = typeof e == \"undefined\" ? window.event : e; startLine(event, this)' onmousemove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event, this)' onmouseup='var event = typeof e == \"undefined\" ? window.event : e; endLine(event, this)' ontouchstart='var event = typeof e == \"undefined\" ? window.event : e; startLine(event.touches[0], this); event.preventDefault()' ontouchmove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event.touches[0], this); event.preventDefault()' ontouchend='var event = typeof e == \"undefined\" ? window.event : e; endLine(event.touches[0], this); event.preventDefault()'><path id='p' stroke='" + getColor(color) + "' stroke-width='5' fill='none'/></svg><div id='counter' class='font'>10</div>";
+					}, 4000));
+					timeouts.push(window.setTimeout(function(){
+						document.getElementById("container").innerHTML = "<div id='prompt' class='font'>Draw a...<div class='topic'>" + topic + "</div></div><svg id='svg' onmousedown='var event = typeof e == \"undefined\" ? window.event : e; startLine(event, this)' onmousemove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event, this)' onmouseup='var event = typeof e == \"undefined\" ? window.event : e; endLine(event, this)' ontouchstart='var event = typeof e == \"undefined\" ? window.event : e; startLine(event.touches[0], this); event.preventDefault()' ontouchmove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event.touches[0], this); event.preventDefault()' ontouchend='var event = typeof e == \"undefined\" ? window.event : e; endLine(event.touches[0], this); event.preventDefault()'><path id='p' stroke='" + getColor(color) + "' stroke-width='5' fill='none'/></svg><div id='counter' class='font'>10</div><div id='skip' class='font' onclick='skip()'>▶▶</div>";
 						var n = 10;
 						function countDown(){
 							n--;
 							document.getElementById("counter").innerHTML = n;
 							if(n != 0)
-								setTimeout(countDown, 1000);
+								timeouts.push(setTimeout(countDown, 1000));
 							else{
 								var svg = document.getElementById("svg");
 								svg.onmousedown = null;
@@ -188,14 +188,14 @@ function newGame(){
 									done: false
 								});
 								document.getElementById("prompt").innerHTML = "<div class='topic'>Time's up!</div>";
-								setTimeout(function(){
+								timeouts.push(setTimeout(function(){
 									scoresLeft = Object.keys(players).length / 3;
 									rateDrawing();
-								}, 3000);
+								}, 3000));
 							}
 						}
-						setTimeout(countDown, 1000);
-					}, 5000);
+						timeouts.push(setTimeout(countDown, 1000));
+					}, 5000));
 					topic = topics[Math.floor(Math.random() * topics.length)];
 					database.ref("/A" + code + "/topic").set(topic);
 					database.ref("/A" + code).on("child_changed", function(e){
@@ -216,9 +216,13 @@ function newGame(){
 					document.getElementById("prompt").innerHTML = "<div class='topic'>Best in show:</div>";
 					// if(!mobile)
 					requestAnimationFrame(positionDrawing);
-					setTimeout(function(){
+					timeouts.push(setTimeout(function(){
 						database.ref("/A" + code + "/status").set(1);
-					}, 5000);
+					}, 5000));
+				}
+				if(e == 4){
+					while(timeouts.length > 0) clearTimeout(timeouts.splice(0, 1)[0]);
+					database.ref("/A" + code + "/status").set(1);
 				}
 			});
 		}else
@@ -238,7 +242,7 @@ function checkCode(el){
 		el.onkeyup = null;
 		database.ref("/A" + code + "/status").once("value", function(e){
 			if(e.val() === 0){
-				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Waiting for the game to start...</span></div><div id='wcode' class='wait font'>" + code + "</div>";
+				document.getElementById("container").innerHTML = "<div id='waiting' style='background-color: " + getColor(color) + "'><span class='wait font'>Wating for the game to start...</span></div><div id='wcode' class='wait font'>" + code + "</div>";
 				ref = database.ref("/A" + code).push();
 				ref.set({
 					color: color,
@@ -254,26 +258,26 @@ function checkCode(el){
 						ratedPlayers = [];
 						d = "M" + document.body.clientWidth / 2 + "," + document.body.clientHeight / 2 + " ";
 						document.getElementById("container").innerHTML = "<div id='loader' class='font'>Get ready to draw in... <span id='count'>5</span></div>";
-						window.setTimeout(function(){
+						timeouts.push(window.setTimeout(function(){
 							document.getElementById("count").innerHTML = "4";
-						}, 1000);
-						window.setTimeout(function(){
+						}, 1000));
+						timeouts.push(window.setTimeout(function(){
 							document.getElementById("count").innerHTML = "3";
-						}, 2000);
-						window.setTimeout(function(){
+						}, 2000));
+						timeouts.push(window.setTimeout(function(){
 							document.getElementById("count").innerHTML = "2";
-						}, 3000);
-						window.setTimeout(function(){
+						}, 3000));
+						timeouts.push(window.setTimeout(function(){
 							document.getElementById("count").innerHTML = "1";
-						}, 4000);
-						window.setTimeout(function(){
+						}, 4000));
+						timeouts.push(window.setTimeout(function(){
 							document.getElementById("container").innerHTML = "<div id='prompt' class='font'>Draw a...<div class='topic'>" + topic + "</div></div><svg id='svg' onmousedown='var event = typeof e == \"undefined\" ? window.event : e; startLine(event, this)' onmousemove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event, this)' onmouseup='endLine(event, this)' ontouchstart='var event = typeof e == \"undefined\" ? window.event : e; startLine(event.touches[0], this); event.preventDefault()' ontouchmove='var event = typeof e == \"undefined\" ? window.event : e; moveLine(event.touches[0], this); event.preventDefault()' ontouchend='var event = typeof e == \"undefined\" ? window.event : e; endLine(event.touches[0], this); event.preventDefault()'><path id='p' stroke='" + getColor(color) + "' stroke-width='5' fill='none'/></svg><div id='counter' class='font'>10</div>";
 							var n = 10;
 							function countDown(){
 								n--;
 								document.getElementById("counter").innerHTML = n;
 								if(n != 0)
-									setTimeout(countDown, 1000);
+									timeouts.push(setTimeout(countDown, 1000));
 								else{
 									var svg = document.getElementById("svg");
 									svg.onmousedown = null;
@@ -290,14 +294,14 @@ function checkCode(el){
 										done: false
 									});
 									document.getElementById("prompt").innerHTML = "<div class='topic'>Time's up!</div>";
-									setTimeout(function(){
+									timeouts.push(setTimeout(function(){
 										scoresLeft = Object.keys(players).length / 3;
 										rateDrawing();
-									}, 3000);
+									}, 3000));
 								}
 							}
-							setTimeout(countDown, 1000);
-						}, 5000);
+							timeouts.push(setTimeout(countDown, 1000));
+						}, 5000));
 					}else
 						el.onkeyup = function(t){
 							checkCode(t);
@@ -314,9 +318,12 @@ function checkCode(el){
 						document.getElementById("prompt").innerHTML = "<div class='topic'>Best in show:</div>";
 						// if(!mobile)
 						requestAnimationFrame(positionDrawing);
-						setTimeout(function(){
+						timeouts.push(setTimeout(function(){
 							database.ref("/A" + code + "/status").set(1);
-						}, 5000);
+						}, 5000));
+					}
+					if(e == 4){
+						while(timeouts.length > 0) clearTimeout(timeouts.splice(0, 1)[0]);
 					}
 				});
 				database.ref("/A" + code + "/topic").on("value", function(e){
@@ -355,4 +362,8 @@ function moveLine(event, e){
 function endLine(event, e){
 	// console.log(event);
 	mouse = false;
+}
+
+function skip(){
+	database.ref("/A" + code + "/status").set(4);
 }
