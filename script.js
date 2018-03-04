@@ -1,4 +1,4 @@
-var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard", "computer", "mouse", "fire", "teeth", "rocket", "train", "bottle", "guitar", "sock", "pumpkin", "pear", "banana", "boat", "pants", "watch", "lamp", "hat"];
+var topics = ["cat", "dog", "snail", "house", "horse", "cloud", "tree", "car", "pizza", "phone", "helicopter", "pineapple", "apple", "tv", "floppy disk", "alien", "shrek", "book", "toaster", "shoe", "chair", "dinosaur", "lizard", "computer", "mouse", "fire", "teeth", "rocket", "train", "bottle", "guitar", "sock", "pumpkin", "pear", "banana", "boat", "pants", "watch", "lamp", "hat", "flamingo", "taco", "sunset", "unicorn", "birthday", "sombrero", "owl", "ice cream", "wind", "money", "hot dog", "elephant", "darth vader", "yoda", "island", "band-aid", "luke"];
 var timeouts = [];
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
