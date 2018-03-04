@@ -151,8 +151,6 @@ html, body{
 	padding: 2vmin;
 	border-radius: 3vmin;
 	border: 2px solid white;
-	top: -5vmin;
-	right: -5vmin;
 	padding-right: 5vmin;
 	padding-top: 5vmin;
 	color: white;
@@ -187,4 +185,17 @@ html, body{
 	width: 100vw;
 	background-color: black;
 	border-bottom: 2px solid white;
+}
+#skip{
+	position: absolute;
+	font-size: 10vmin;
+	padding: 2vmin;
+	border-radius: 3vmin;
+	border: 2px solid white;
+	top: -5vmin;
+	left: -5vmin;
+	padding-left: 5vmin;
+	padding-top: 5vmin;
+	color: white;
+	cursor: pointer;
 }
